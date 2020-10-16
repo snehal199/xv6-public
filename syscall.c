@@ -128,6 +128,30 @@ static int (*syscalls[])(void) = {
 [SYS_close]   sys_close,
 };
 
+static char* syscallname[] = {
+  [SYS_fork]    "Fork()",
+  [SYS_exit]    "Exit()",
+  [SYS_wait]    "Wait()",
+  [SYS_pipe]    "Pipe()",
+  [SYS_read]    "Read()",
+  [SYS_kill]    "Kill()",
+  [SYS_exec]    "exec()",
+  [SYS_fstat]   "Fstat()",
+  [SYS_chdir]   "Chdir()",
+  [SYS_dup]     "dup()",
+  [SYS_getpid]  "getpid()",
+  [SYS_sbrk]    "sbrk()",
+  [SYS_sleep]   "sleep()",
+  [SYS_uptime]  "uptime",
+  [SYS_open]    "Open()",
+  [SYS_write]   "Write()",
+  [SYS_mknod]   "mknode()",
+  [SYS_unlink]  "unlink()",
+  [SYS_link]    "link()",
+  [SYS_mkdir]   "mkdir()",
+  [SYS_close]   "close()",
+};
+
 void
 syscall(void)
 {
@@ -135,8 +159,12 @@ syscall(void)
   struct proc *curproc = myproc();
 
   num = curproc->tf->eax;
+ 
   if(num > 0 && num < NELEM(syscalls) && syscalls[num]) {
     curproc->tf->eax = syscalls[num]();
+    cprintf("%s -> %d\n",syscallname[num],syscalls[num]());/* Printing the required output
+     */
+    
   } else {
     cprintf("%d %s: unknown sys call %d\n",
             curproc->pid, curproc->name, num);
