@@ -9,3 +9,11 @@ struct stat {
   short nlink; // Number of links to file
   uint size;   // Size of file in bytes
 };
+
+struct uproc {
+  uint sz;                     // Size of process memory (bytes)
+  int pid;                     // Process ID
+  int killed;                  // If non-zero, have been killed
+  char name[16];               // Process name (debugging)
+  int ppid;                    // Parent process ID
+};

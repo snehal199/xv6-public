@@ -89,3 +89,9 @@ sys_uptime(void)
   release(&tickslock);
   return xticks;
 }
+
+int
+sys_getprocinfo(int pid,struct uproc *up)
+{
+  return getprocinfo(pid,up);
+}
